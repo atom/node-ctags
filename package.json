@@ -1,6 +1,16 @@
 {
   "name": "ctags",
+  "description": "A package using source code tag files",
   "version": "0.1.0",
+  "keyword": [
+    "tags",
+    "etags"
+  ],
+  "author": {
+    "name" : "Kevin Sawicki",
+    "email" : "kevin@github.com"
+  },
+  "main": "lib/ctags",
   "devDependencies": {
     "grunt": "~0.4.0",
     "grunt-contrib-coffee": "~0.4.0",
