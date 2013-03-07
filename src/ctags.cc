@@ -3,7 +3,6 @@
 #include <node.h>
 #include <v8.h>
 #include <vector>
-#include <iostream>
 
 using namespace v8;
 using namespace std;
