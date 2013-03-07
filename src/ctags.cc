@@ -51,7 +51,38 @@ Handle<Value> Find(const Arguments& args) {
   return scope.Close(array);
 }
 
+Handle<Value> GetTags(const Arguments& args) {
+  if (args.Length() == 0) {
+    HandleScope scope;
+    return scope.Close(Array::New(0));
+  }
+
+  String::Utf8Value utf8Path(Local<String>::Cast(args[0]));
+  string path(*utf8Path);
+
+  tagFileInfo info;
+  tagFile* tagFile;
+  tagFile = tagsOpen(path.c_str(), &info);
+  if (!info.status.opened) {
+    HandleScope scope;
+    return scope.Close(Array::New(0));
+  }
+
+  tagEntry entry;
+  vector< Local<Object> > entries;
+  while (tagsNext(tagFile, &entry) == TagSuccess)
+    entries.push_back(ParseEntry(entry));
+  tagsClose(tagFile);
+
+  Handle<Array> array = Array::New(entries.size());
+  for (size_t i = 0; i < entries.size(); i++)
+    array->Set(i, entries[i]);
+  HandleScope scope;
+  return scope.Close(array);
+}
+
 void init(Handle<Object> target) {
   target->Set(String::NewSymbol("find"), FunctionTemplate::New(Find)->GetFunction());
+  target->Set(String::NewSymbol("getTags"), FunctionTemplate::New(GetTags)->GetFunction());
 }
 NODE_MODULE(ctags, init)

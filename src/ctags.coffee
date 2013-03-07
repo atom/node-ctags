@@ -1,3 +1,4 @@
-{find} = require('bindings')('ctags.node')
+ctags = require('bindings')('ctags.node')
 
-exports.find = find
+exports.find = ctags.find
+exports.getTags = ctags.getTags
