@@ -1,4 +1,4 @@
-# Ctags Node module [![Build Status](https://travis-ci.org/Atom/node-ctags.png)](https://travis-ci.org/Atom/node-ctags)
+# Ctags Node module [![Build Status](https://travis-ci.org/atom/node-ctags.png)](https://travis-ci.org/atom/node-ctags)
 
 Read all about ctags [here](http://ctags.sourceforge.net/).
 
