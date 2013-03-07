@@ -7,9 +7,9 @@ describe "ctags", ->
   beforeEach ->
     tagsFile = path.join(__dirname, 'fixtures/tags')
 
-  describe "find", ->
+  describe "findTag", ->
     it "returns all matching tags", ->
-      tags = ctags.find(tagsFile, 'duplicate')
+      tags = ctags.findTag(tagsFile, 'duplicate')
       expect(tags.length).toBe 2
 
       expect(tags[0].file).toBe 'tagged-duplicate.js'
