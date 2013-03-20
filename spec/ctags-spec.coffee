@@ -1,14 +1,14 @@
 ctags = require '../lib/ctags'
 path = require 'path'
 
-describe "ctags", ->
+describe 'ctags', ->
   tagsFile = null
 
   beforeEach ->
     tagsFile = path.join(__dirname, 'fixtures/tags')
 
-  describe "findTag", ->
-    it "returns all matching tags", ->
+  describe '.findTag(name)', ->
+    it 'returns all matching tags', ->
       tags = ctags.findTag(tagsFile, 'duplicate')
       expect(tags.length).toBe 2
 
@@ -20,8 +20,8 @@ describe "ctags", ->
       expect(tags[1].name).toBe 'duplicate'
       expect(tags[1].pattern).toBe '/^function duplicate() {$/'
 
-  describe "getTags", ->
-    it "returns all tags", ->
+  describe '.getTags()', ->
+    it 'returns all tags', ->
       tags = ctags.getTags(tagsFile)
       expect(tags.length).toBe 4
 
