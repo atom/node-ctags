@@ -8,6 +8,11 @@ Read all about ctags [here](http://ctags.sourceforge.net/).
 npm install ctags
 ```
 
+## Building
+  * Clone the repository
+  * Run `npm install`
+  * Run `grunt` to compile the native and CoffeeScript code
+
 ## Documentation
 
 ### findTags(path, tag, [options])
