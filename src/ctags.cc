@@ -34,7 +34,14 @@ Handle<Value> FindTag(const Arguments& args) {
       tagFlags |= TAG_PARTIALMATCH;
     else
       tagFlags |= TAG_FULLMATCH;
-  }
+
+    if (options->Get(String::NewSymbol("caseInsensitive"))->BooleanValue())
+      tagFlags |= TAG_IGNORECASE;
+    else
+      tagFlags |= TAG_OBSERVECASE;
+  } else
+    tagFlags = TAG_OBSERVECASE | TAG_FULLMATCH;
+
 
   tagFileInfo info;
   tagFile* tagFile;

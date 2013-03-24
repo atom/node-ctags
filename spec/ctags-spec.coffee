@@ -33,6 +33,15 @@ describe 'ctags', ->
         expect(tags[1].name).toBe 'duplicate'
         expect(tags[1].pattern).toBe '/^function duplicate() {$/'
 
+    describe 'when caseInsensitive is set to true', ->
+      it 'returns tags that match the name case insensitively', ->
+        tags = ctags.findTag(tagsFile, 'callmemaybe', caseInsensitive: true)
+        expect(tags.length).toBe 1
+
+        expect(tags[0].file).toBe 'tagged.js'
+        expect(tags[0].name).toBe 'callMeMaybe'
+        expect(tags[0].pattern).toBe '/^function callMeMaybe() {$/'
+
   describe '.getTags()', ->
     it 'returns all tags', ->
       tags = ctags.getTags(tagsFile)
