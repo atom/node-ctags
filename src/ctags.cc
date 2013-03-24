@@ -27,7 +27,7 @@ Handle<Value> FindTags(const Arguments& args) {
   String::Utf8Value utf8Tag(Local<String>::Cast(args[1]));
   string tag(*utf8Tag);
 
-  int tagFlags = TAG_OBSERVECASE;
+  int tagFlags = 0;
   if (args[2]->IsObject()) {
     Local<Object> options(Local<Object>::Cast(args[2]));
     if (options->Get(String::NewSymbol("partialMatch"))->BooleanValue())
