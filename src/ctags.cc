@@ -29,7 +29,7 @@ Handle<Value> FindTag(const Arguments& args) {
 
   tagFileInfo info;
   tagFile* tagFile;
-  tagFile = tagsOpen(path.c_str(), &info);
+  tagFile = tagsOpen(path.data(), &info);
   if (!info.status.opened) {
     HandleScope scope;
     return scope.Close(Array::New(0));
@@ -37,7 +37,7 @@ Handle<Value> FindTag(const Arguments& args) {
 
   tagEntry entry;
   vector< Local<Object> > entries;
-  if (tagsFind(tagFile, &entry, tag.c_str(), TAG_FULLMATCH | TAG_OBSERVECASE) == TagSuccess) {
+  if (tagsFind(tagFile, &entry, tag.data(), TAG_FULLMATCH | TAG_OBSERVECASE) == TagSuccess) {
     entries.push_back(ParseEntry(entry));
     while (tagsFindNext(tagFile, &entry) == TagSuccess)
       entries.push_back(ParseEntry(entry));
