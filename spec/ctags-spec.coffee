@@ -20,6 +20,19 @@ describe 'ctags', ->
       expect(tags[1].name).toBe 'duplicate'
       expect(tags[1].pattern).toBe '/^function duplicate() {$/'
 
+    describe 'when partialMatch is set to true', ->
+      it 'returns tags that partially match the name', ->
+        tags = ctags.findTag(tagsFile, 'dup', partialMatch: true)
+        expect(tags.length).toBe 2
+
+        expect(tags[0].file).toBe 'tagged-duplicate.js'
+        expect(tags[0].name).toBe 'duplicate'
+        expect(tags[0].pattern).toBe '/^function duplicate() {$/'
+
+        expect(tags[1].file).toBe 'tagged.js'
+        expect(tags[1].name).toBe 'duplicate'
+        expect(tags[1].pattern).toBe '/^function duplicate() {$/'
+
   describe '.getTags()', ->
     it 'returns all tags', ->
       tags = ctags.getTags(tagsFile)

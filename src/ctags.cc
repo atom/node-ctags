@@ -27,6 +27,15 @@ Handle<Value> FindTag(const Arguments& args) {
   String::Utf8Value utf8Tag(Local<String>::Cast(args[1]));
   string tag(*utf8Tag);
 
+  int tagFlags = TAG_OBSERVECASE;
+  if (args[2]->IsObject()) {
+    Local<Object> options(Local<Object>::Cast(args[2]));
+    if (options->Get(String::NewSymbol("partialMatch"))->BooleanValue())
+      tagFlags |= TAG_PARTIALMATCH;
+    else
+      tagFlags |= TAG_FULLMATCH;
+  }
+
   tagFileInfo info;
   tagFile* tagFile;
   tagFile = tagsOpen(path.data(), &info);
@@ -37,7 +46,7 @@ Handle<Value> FindTag(const Arguments& args) {
 
   tagEntry entry;
   vector< Local<Object> > entries;
-  if (tagsFind(tagFile, &entry, tag.data(), TAG_FULLMATCH | TAG_OBSERVECASE) == TagSuccess) {
+  if (tagsFind(tagFile, &entry, tag.data(), tagFlags) == TagSuccess) {
     entries.push_back(ParseEntry(entry));
     while (tagsFindNext(tagFile, &entry) == TagSuccess)
       entries.push_back(ParseEntry(entry));
