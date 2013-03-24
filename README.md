@@ -10,9 +10,14 @@ npm install ctags
 
 ## Documentation
 
-### findTag(path, tag)
+### findTag(path, tag, [options])
 
 Get all tags matching the tag specified from the tags file at the path.
+
+The following `options` are supported:
+  * `caseInsensitive`: Include tags that match case insensitively,
+    defaults to `false`
+  * `partialMatch`: Include tags that partially match, defaults to `false`
 
 ```coffeescript
 ctags = require 'ctags'
