@@ -10,7 +10,7 @@ npm install ctags
 
 ## Documentation
 
-### findTag(path, tag, [options])
+### findTags(path, tag, [options])
 
 Get all tags matching the tag specified from the tags file at the path.
 
@@ -22,7 +22,7 @@ The following `options` are supported:
 ```coffeescript
 ctags = require 'ctags'
 
-tags = ctags.findTag('/Users/me/repos/node/tags', 'exists')
+tags = ctags.findTags('/Users/me/repos/node/tags', 'exists')
 for tag in tags
   console.log("#{tag.name} is in #{tag.file}")
 ```

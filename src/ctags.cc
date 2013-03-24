@@ -16,7 +16,7 @@ Local<Object> ParseEntry(tagEntry entry) {
   return tagEntry;
 }
 
-Handle<Value> FindTag(const Arguments& args) {
+Handle<Value> FindTags(const Arguments& args) {
   if (args.Length() < 2) {
     HandleScope scope;
     return scope.Close(Array::New(0));
@@ -98,7 +98,7 @@ Handle<Value> GetTags(const Arguments& args) {
 }
 
 void init(Handle<Object> target) {
-  target->Set(String::NewSymbol("findTag"), FunctionTemplate::New(FindTag)->GetFunction());
+  target->Set(String::NewSymbol("findTags"), FunctionTemplate::New(FindTags)->GetFunction());
   target->Set(String::NewSymbol("getTags"), FunctionTemplate::New(GetTags)->GetFunction());
 }
 NODE_MODULE(ctags, init)

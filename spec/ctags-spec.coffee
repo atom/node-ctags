@@ -7,9 +7,9 @@ describe 'ctags', ->
   beforeEach ->
     tagsFile = path.join(__dirname, 'fixtures/tags')
 
-  describe '.findTag(name)', ->
+  describe '.findTags(name)', ->
     it 'returns all matching tags', ->
-      tags = ctags.findTag(tagsFile, 'duplicate')
+      tags = ctags.findTags(tagsFile, 'duplicate')
       expect(tags.length).toBe 2
 
       expect(tags[0].file).toBe 'tagged-duplicate.js'
@@ -22,7 +22,7 @@ describe 'ctags', ->
 
     describe 'when partialMatch is set to true', ->
       it 'returns tags that partially match the name', ->
-        tags = ctags.findTag(tagsFile, 'dup', partialMatch: true)
+        tags = ctags.findTags(tagsFile, 'dup', partialMatch: true)
         expect(tags.length).toBe 2
 
         expect(tags[0].file).toBe 'tagged-duplicate.js'
@@ -35,7 +35,7 @@ describe 'ctags', ->
 
     describe 'when caseInsensitive is set to true', ->
       it 'returns tags that match the name case insensitively', ->
-        tags = ctags.findTag(tagsFile, 'callmemaybe', caseInsensitive: true)
+        tags = ctags.findTags(tagsFile, 'callmemaybe', caseInsensitive: true)
         expect(tags.length).toBe 1
 
         expect(tags[0].file).toBe 'tagged.js'
