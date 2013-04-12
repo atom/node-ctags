@@ -1,14 +1,14 @@
 {
   "name": "ctags",
   "description": "A package for reading source code tag files",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "keywords": [
     "tags",
     "etags"
   ],
   "author": {
-    "name" : "Kevin Sawicki",
-    "email" : "kevin@github.com"
+    "name": "Kevin Sawicki",
+    "email": "kevin@github.com"
   },
   "repository": {
     "type": "git",
