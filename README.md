@@ -12,6 +12,7 @@ npm install ctags
   * Clone the repository
   * Run `npm install`
   * Run `grunt` to compile the native and CoffeeScript code
+  * Run `grunt test` to run the specs
 
 ## Documentation
 
