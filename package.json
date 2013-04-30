@@ -1,7 +1,7 @@
 {
   "name": "ctags",
   "description": "A package for reading source code tag files",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "keywords": [
     "tags",
     "etags"
@@ -10,12 +10,12 @@
     "name": "Kevin Sawicki",
     "email": "kevin@github.com"
   },
-
-  "licenses": [{
-    "type": "MIT",
-    "url": "http://github.com/atom/node-ctags/raw/master/LICENSE.md"
-  }],
-
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/atom/node-ctags/raw/master/LICENSE.md"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/atom/node-ctags.git"
