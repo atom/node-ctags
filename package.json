@@ -10,6 +10,12 @@
     "name": "Kevin Sawicki",
     "email": "kevin@github.com"
   },
+
+  "licenses": [{
+    "type": "MIT",
+    "url": "http://github.com/atom/node-ctags/raw/master/LICENSE.md"
+  }],
+
   "repository": {
     "type": "git",
     "url": "https://github.com/atom/node-ctags.git"
