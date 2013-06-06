@@ -42,7 +42,6 @@ Handle<Value> FindTags(const Arguments& args) {
   } else
     tagFlags = TAG_OBSERVECASE | TAG_FULLMATCH;
 
-
   tagFileInfo info;
   tagFile* tagFile;
   tagFile = tagsOpen(path.data(), &info);
