@@ -36,6 +36,10 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-shell')
   grunt.loadNpmTasks('grunt-coffeelint')
+  grunt.registerTask 'clean', ->
+    rm = require('rimraf').sync
+    rm('lib')
+    rm('build')
   grunt.registerTask('lint', ['coffeelint'])
   grunt.registerTask('default', ['lint', 'coffee', 'shell:rebuild'])
   grunt.registerTask('test', ['default', 'shell:test'])
