@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Node Ctags by atom</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Node Ctags</h1>
+        <p>Ctags Node module</p>
+
+        <p class="view"><a href="https://github.com/atom/node-ctags">View the Project on GitHub <small>atom/node-ctags</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/atom/node-ctags/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/atom/node-ctags/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/atom/node-ctags">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="ctags-node-module-" class="anchor" href="#ctags-node-module-"><span class="octicon octicon-link"></span></a>Ctags Node module <a href="https://travis-ci.org/atom/node-ctags"><img src="https://travis-ci.org/atom/node-ctags.png" alt="Build Status"></a>
+</h1>
+
+<p>Read all about ctags <a href="http://ctags.sourceforge.net/">here</a>.</p>
+
+<h2>
+<a name="installing" class="anchor" href="#installing"><span class="octicon octicon-link"></span></a>Installing</h2>
+
+<div class="highlight"><pre>npm install ctags
+</pre></div>
+
+<h2>
+<a name="building" class="anchor" href="#building"><span class="octicon octicon-link"></span></a>Building</h2>
+
+<ul>
+<li>Clone the repository</li>
+<li>Run <code>npm install</code>
+</li>
+<li>Run <code>grunt</code> to compile the native and CoffeeScript code</li>
+<li>Run <code>grunt test</code> to run the specs</li>
+</ul><h2>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<h3>
+<a name="findtagspath-tag-options" class="anchor" href="#findtagspath-tag-options"><span class="octicon octicon-link"></span></a>findTags(path, tag, [options])</h3>
+
+<p>Get all tags matching the tag specified from the tags file at the path.</p>
+
+<p><code>path</code> - The string path to the tags file.</p>
+
+<p><code>tag</code> - The string name of the tag to search for.</p>
+
+<p><code>options</code> - An optional options object containing the following keys:</p>
+
+<ul>
+<li>
+<code>caseInsensitive</code>: <code>true</code> to include tags that match case insensitively,
+(default: <code>false</code>)</li>
+<li>
+<code>partialMatch</code>: <code>true</code> to include tags that partially match the given tag
+(default: <code>false</code>)</li>
+</ul><p>Returns an array containing objects that have <code>name</code> and <code>file</code> keys and
+optionally a <code>pattern</code> key if the tag file specified contains tag patterns.</p>
+
+<h4>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight"><pre><span class="nv">ctags = </span><span class="nx">require</span> <span class="s">'ctags'</span>
+
+<span class="nv">tags = </span><span class="nx">ctags</span><span class="p">.</span><span class="nx">findTags</span><span class="p">(</span><span class="s">'/Users/me/repos/node/tags'</span><span class="p">,</span> <span class="s">'exists'</span><span class="p">)</span>
+<span class="k">for</span> <span class="nx">tag</span> <span class="k">in</span> <span class="nx">tags</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s">"</span><span class="si">#{</span><span class="nx">tag</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="s"> is in </span><span class="si">#{</span><span class="nx">tag</span><span class="p">.</span><span class="nx">file</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</pre></div>
+
+<h3>
+<a name="gettagspath" class="anchor" href="#gettagspath"><span class="octicon octicon-link"></span></a>getTags(path)</h3>
+
+<p>Get all tags found in the path specified.</p>
+
+<p><code>path</code> - The string path to the tags file.</p>
+
+<p>Returns an array containing objects that have <code>name</code> and <code>file</code> keys and
+optionally a <code>pattern</code> key if the tag file specified contains tag patterns.</p>
+
+<h4>
+<a name="example-1" class="anchor" href="#example-1"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight"><pre><span class="nv">ctags = </span><span class="nx">require</span> <span class="s">'ctags'</span>
+
+<span class="nv">allTags = </span><span class="nx">ctags</span><span class="p">.</span><span class="nx">getTags</span><span class="p">(</span><span class="s">'/Users/me/repos/node/tags'</span><span class="p">)</span>
+<span class="k">for</span> <span class="nx">tag</span> <span class="k">in</span> <span class="nx">allTags</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s">"</span><span class="si">#{</span><span class="nx">tag</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="s"> is in </span><span class="si">#{</span><span class="nx">tag</span><span class="p">.</span><span class="nx">file</span><span class="si">}</span><span class="s"> with pattern: </span><span class="si">#{</span><span class="nx">tag</span><span class="p">.</span><span class="nx">pattern</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/atom">atom</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
