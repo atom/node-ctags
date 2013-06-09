@@ -10,6 +10,14 @@ module.exports = (grunt) ->
         dest: 'lib'
         ext: '.js'
 
+    coffeelint:
+      options:
+        max_line_length:
+          level: 'ignore'
+
+      src: ['src/**/*.coffee']
+      test: ['spec/**/*.coffee']
+
     shell:
       rebuild:
         command: 'node-gyp rebuild'
@@ -27,5 +35,7 @@ module.exports = (grunt) ->
 
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-shell')
-  grunt.registerTask('default', ['coffee', 'shell:rebuild'])
+  grunt.loadNpmTasks('grunt-coffeelint')
+  grunt.registerTask('lint', ['coffeelint'])
+  grunt.registerTask('default', ['lint', 'coffee', 'shell:rebuild'])
   grunt.registerTask('test', ['default', 'shell:test'])
