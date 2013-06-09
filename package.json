@@ -23,6 +23,7 @@
   "bugs": {
     "url": "https://github.com/atom/node-ctags/issues"
   },
+  "homepage": "http://atom.github.io/node-ctags",
   "main": "./lib/ctags.js",
   "devDependencies": {
     "grunt": "~0.4.0",
