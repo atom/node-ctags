@@ -4,8 +4,18 @@
 #include <vector>
 #include "readtags.h"
 
-using namespace v8;
-using namespace std;
+using ::v8::Arguments;
+using ::v8::Array;
+using ::v8::FunctionTemplate;
+using ::v8::Handle;
+using ::v8::HandleScope;
+using ::v8::Local;
+using ::v8::Object;
+using ::v8::String;
+using ::v8::Value;
+
+using ::std::string;
+using ::std::vector;
 
 Local<Object> ParseEntry(tagEntry entry) {
   Local<Object> tagEntry = Object::New();
