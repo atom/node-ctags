@@ -22,7 +22,8 @@ Local<Object> ParseEntry(tagEntry entry) {
   tagEntry->Set(String::NewSymbol("name"), String::NewSymbol(entry.name));
   tagEntry->Set(String::NewSymbol("file"), String::NewSymbol(entry.file));
   if (entry.address.pattern != NULL)
-    tagEntry->Set(String::NewSymbol("pattern"), String::NewSymbol(entry.address.pattern));
+    tagEntry->Set(String::NewSymbol("pattern"),
+                  String::NewSymbol(entry.address.pattern));
   return tagEntry;
 }
 
@@ -107,7 +108,9 @@ Handle<Value> GetTags(const Arguments& args) {
 }
 
 void init(Handle<Object> target) {
-  target->Set(String::NewSymbol("findTags"), FunctionTemplate::New(FindTags)->GetFunction());
-  target->Set(String::NewSymbol("getTags"), FunctionTemplate::New(GetTags)->GetFunction());
+  target->Set(String::NewSymbol("findTags"),
+              FunctionTemplate::New(FindTags)->GetFunction());
+  target->Set(String::NewSymbol("getTags"),
+              FunctionTemplate::New(GetTags)->GetFunction());
 }
 NODE_MODULE(ctags, init)
