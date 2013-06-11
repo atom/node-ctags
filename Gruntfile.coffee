@@ -18,6 +18,18 @@ module.exports = (grunt) ->
       src: ['src/**/*.coffee']
       test: ['spec/**/*.coffee']
 
+    cpplint:
+      files: ['src/**/*.cc']
+      reporter: 'spec'
+      verbosity: 1
+      filters:
+        build:
+          include: false
+        legal:
+          copyright: false
+        readability:
+          braces: false
+
     shell:
       rebuild:
         command: 'node-gyp rebuild'
@@ -36,10 +48,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-shell')
   grunt.loadNpmTasks('grunt-coffeelint')
+  grunt.loadNpmTasks('node-cpplint')
   grunt.registerTask 'clean', ->
     rm = require('rimraf').sync
     rm('lib')
     rm('build')
-  grunt.registerTask('lint', ['coffeelint'])
+  grunt.registerTask('lint', ['coffeelint', 'cpplint'])
   grunt.registerTask('default', ['lint', 'coffee', 'shell:rebuild'])
   grunt.registerTask('test', ['default', 'shell:test'])
