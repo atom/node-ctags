@@ -314,6 +314,7 @@ static void parseTagLine (tagFile *file, tagEntry *const entry)
 			p = tab + 1;
 			if (*p == '/'  ||  *p == '?')
 			{
+				int slashCount;
 				/* parse pattern */
 				int delimiter = *(unsigned char*) p;
 				entry->address.lineNumber = 0;
@@ -327,7 +328,7 @@ static void parseTagLine (tagFile *file, tagEntry *const entry)
 						break;
 					// Make sure preceding backslash isn't an escaped backslash by
 					// advancing backwards and counting the number of backslashes
-					int slashCount = 1;
+					slashCount = 1;
 					while (*(p - slashCount - 1) == '\\')
 						slashCount++;
 					if (slashCount % 2 == 0)
