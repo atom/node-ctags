@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "nan.h"
-using namespace v8;
+using namespace v8;  // NOLINT
 
 #include "readtags.h"
 
