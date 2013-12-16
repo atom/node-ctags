@@ -1,52 +1,41 @@
-#include <node.h>
-#include <v8.h>
 #include <string>
 #include <vector>
+
+#include "nan.h"
+using namespace v8;
+
 #include "readtags.h"
 
-using ::v8::Arguments;
-using ::v8::Array;
-using ::v8::FunctionTemplate;
-using ::v8::Handle;
-using ::v8::HandleScope;
-using ::v8::Local;
-using ::v8::Object;
-using ::v8::String;
-using ::v8::Value;
+namespace {
 
-using ::std::string;
-using ::std::vector;
-
-Local<Object> ParseEntry(tagEntry entry) {
+Local<Object> ParseEntry(const tagEntry& entry) {
   Local<Object> tagEntry = Object::New();
-  tagEntry->Set(String::NewSymbol("name"), String::NewSymbol(entry.name));
-  tagEntry->Set(String::NewSymbol("file"), String::NewSymbol(entry.file));
+  tagEntry->Set(NanSymbol("name"), NanSymbol(entry.name));
+  tagEntry->Set(NanSymbol("file"), NanSymbol(entry.file));
   if (entry.address.pattern != NULL)
-    tagEntry->Set(String::NewSymbol("pattern"),
-                  String::NewSymbol(entry.address.pattern));
+    tagEntry->Set(NanSymbol("pattern"),
+                  NanSymbol(entry.address.pattern));
   return tagEntry;
 }
 
-Handle<Value> FindTags(const Arguments& args) {
-  if (args.Length() < 2) {
-    HandleScope scope;
-    return scope.Close(Array::New(0));
-  }
+NAN_METHOD(FindTags) {
+  NanScope();
 
-  String::Utf8Value utf8Path(Local<String>::Cast(args[0]));
-  string path(*utf8Path);
-  String::Utf8Value utf8Tag(Local<String>::Cast(args[1]));
-  string tag(*utf8Tag);
+  if (args.Length() < 2)
+    NanReturnValue(Array::New(0));
+
+  std::string path(*String::Utf8Value(args[0]));
+  std::string tag(*String::Utf8Value(args[1]));
 
   int tagFlags = 0;
   if (args[2]->IsObject()) {
     Local<Object> options(Local<Object>::Cast(args[2]));
-    if (options->Get(String::NewSymbol("partialMatch"))->BooleanValue())
+    if (options->Get(NanSymbol("partialMatch"))->BooleanValue())
       tagFlags |= TAG_PARTIALMATCH;
     else
       tagFlags |= TAG_FULLMATCH;
 
-    if (options->Get(String::NewSymbol("caseInsensitive"))->BooleanValue())
+    if (options->Get(NanSymbol("caseInsensitive"))->BooleanValue())
       tagFlags |= TAG_IGNORECASE;
     else
       tagFlags |= TAG_OBSERVECASE;
@@ -56,13 +45,11 @@ Handle<Value> FindTags(const Arguments& args) {
   tagFileInfo info;
   tagFile* tagFile;
   tagFile = tagsOpen(path.data(), &info);
-  if (!info.status.opened) {
-    HandleScope scope;
-    return scope.Close(Array::New(0));
-  }
+  if (!info.status.opened)
+    NanReturnValue(Array::New(0));
 
   tagEntry entry;
-  vector< Local<Object> > entries;
+  std::vector< Local<Object> > entries;
   if (tagsFind(tagFile, &entry, tag.data(), tagFlags) == TagSuccess) {
     entries.push_back(ParseEntry(entry));
     while (tagsFindNext(tagFile, &entry) == TagSuccess)
@@ -73,29 +60,25 @@ Handle<Value> FindTags(const Arguments& args) {
   Handle<Array> array = Array::New(entries.size());
   for (size_t i = 0; i < entries.size(); i++)
     array->Set(i, entries[i]);
-  HandleScope scope;
-  return scope.Close(array);
+  NanReturnValue(array);
 }
 
-Handle<Value> GetTags(const Arguments& args) {
-  if (args.Length() == 0) {
-    HandleScope scope;
-    return scope.Close(Array::New(0));
-  }
+NAN_METHOD(GetTags) {
+  NanScope();
 
-  String::Utf8Value utf8Path(Local<String>::Cast(args[0]));
-  string path(*utf8Path);
+  if (args.Length() == 0)
+    NanReturnValue(Array::New(0));
+
+  std::string path(*String::Utf8Value(args[0]));
 
   tagFileInfo info;
   tagFile* tagFile;
   tagFile = tagsOpen(path.c_str(), &info);
-  if (!info.status.opened) {
-    HandleScope scope;
-    return scope.Close(Array::New(0));
-  }
+  if (!info.status.opened)
+    NanReturnValue(Array::New(0));
 
   tagEntry entry;
-  vector< Local<Object> > entries;
+  std::vector< Local<Object> > entries;
   while (tagsNext(tagFile, &entry) == TagSuccess)
     entries.push_back(ParseEntry(entry));
   tagsClose(tagFile);
@@ -103,14 +86,14 @@ Handle<Value> GetTags(const Arguments& args) {
   Handle<Array> array = Array::New(entries.size());
   for (size_t i = 0; i < entries.size(); i++)
     array->Set(i, entries[i]);
-  HandleScope scope;
-  return scope.Close(array);
+  NanReturnValue(array);
 }
 
 void init(Handle<Object> target) {
-  target->Set(String::NewSymbol("findTags"),
-              FunctionTemplate::New(FindTags)->GetFunction());
-  target->Set(String::NewSymbol("getTags"),
-              FunctionTemplate::New(GetTags)->GetFunction());
+  NODE_SET_METHOD(target, "findTags", FindTags);
+  NODE_SET_METHOD(target, "getTags", GetTags);
 }
+
+}  // namespace
+
 NODE_MODULE(ctags, init)
