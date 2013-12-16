@@ -2,6 +2,7 @@
   'targets': [
     {
       'target_name': 'ctags',
+      'include_dirs': [ '<!(node -e "require(\'nan\')")' ],
       'sources': ['src/readtags.c', 'src/ctags.cc'],
       'conditions': [
         ['OS=="win"', {
