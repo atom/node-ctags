@@ -1,7 +1,7 @@
 {
   "name": "ctags",
   "description": "A package for reading source code tag files",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "keywords": [
     "tags",
     "etags"
