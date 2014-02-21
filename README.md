@@ -46,7 +46,7 @@ ctags.findTags('/Users/me/repos/node/tags', 'exists', (error, tags=[]) ->
     console.log("#{tag.name} is in #{tag.file}")
 ```
 
-### createReadStream(tagsFilePath)
+### createReadStream(tagsFilePath, [options])
 
 Create a read stream to a tags file.
 
@@ -59,6 +59,10 @@ An `error` event will be emitted if the tag file cannot be read.
 An `end` event will be emitted when all the tags have been read.
 
 * `tagsFilePath` - The string path to the tags file.
+
+* `options` - An optional object containing the following keys.
+
+  * `chunkSize` - The number of tags to read at a time (default: `100`).
 
 Returns a stream.
 #### Example

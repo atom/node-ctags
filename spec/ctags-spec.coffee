@@ -113,3 +113,35 @@ describe 'ctags', ->
 
       waitsFor ->
         errorHandler.callCount is 1
+
+  it "emit tags in chunks of the given size", ->
+    stream = ctags.createReadStream(tagsFile, chunkSize: 3)
+
+    dataHandler = jasmine.createSpy('dataHandler')
+    stream.on 'data', dataHandler
+
+    endHandler = jasmine.createSpy('endHandler')
+    stream.on('end', endHandler)
+
+    waitsFor ->
+      endHandler.callCount is 1
+
+    runs ->
+      expect(dataHandler.argsForCall[0][0].length).toBe 3
+      expect(dataHandler.argsForCall[1][0].length).toBe 1
+
+      expect(dataHandler.argsForCall[0][0][0].file).toBe 'tagged.js'
+      expect(dataHandler.argsForCall[0][0][0].name).toBe 'callMeMaybe'
+      expect(dataHandler.argsForCall[0][0][0].pattern).toBe '/^function callMeMaybe() {$/'
+
+      expect(dataHandler.argsForCall[0][0][1].file).toBe 'tagged-duplicate.js'
+      expect(dataHandler.argsForCall[0][0][1].name).toBe 'duplicate'
+      expect(dataHandler.argsForCall[0][0][1].pattern).toBe '/^function duplicate() {$/'
+
+      expect(dataHandler.argsForCall[0][0][2].file).toBe 'tagged.js'
+      expect(dataHandler.argsForCall[0][0][2].name).toBe 'duplicate'
+      expect(dataHandler.argsForCall[0][0][2].pattern).toBe '/^function duplicate() {$/'
+
+      expect(dataHandler.argsForCall[1][0][0].file).toBe 'tagged.js'
+      expect(dataHandler.argsForCall[1][0][0].name).toBe 'thisIsCrazy'
+      expect(dataHandler.argsForCall[1][0][0].pattern).toBe '/^var thisIsCrazy = true;$/'
