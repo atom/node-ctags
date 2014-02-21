@@ -29,7 +29,6 @@
     "grunt": "~0.4.0",
     "grunt-contrib-coffee": "~0.9.0",
     "grunt-shell": "~0.2.1",
-    "coffee-script": "~1.6.1",
     "grunt-cli": "~0.1.6",
     "node-gyp": "~0.8.5",
     "jasmine-focused": "1.x",
