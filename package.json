@@ -42,7 +42,7 @@
     "event-stream": "~3.1.0"
   },
   "scripts": {
-    "prepublish": "grunt clean coffee lint shell:rebuild",
+    "prepublish": "grunt prepublish",
     "test": "grunt test"
   }
 }
