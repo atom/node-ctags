@@ -31,7 +31,7 @@ Get all tags matching the tag specified from the tags file at the path.
   * `partialMatch` - `true` to include tags that partially match the given tag
     (default: `false`)
 
-`callback` - The function to call when complete with an error as the first
+* `callback` - The function to call when complete with an error as the first
              argument and an array containing objects that have `name` and
              `file` keys and optionally a `pattern` key if the tag file
              specified contains tag patterns.
