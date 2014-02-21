@@ -40,7 +40,7 @@ module.exports = (grunt) ->
           failOnError: true
 
       test:
-        command: 'node_modules/.bin/jasmine-focused --coffee spec'
+        command: 'node_modules/.bin/jasmine-focused --captureExceptions --coffee spec'
         options:
           stdout: true
           stderr: true
