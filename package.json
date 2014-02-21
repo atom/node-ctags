@@ -42,7 +42,7 @@
     "bindings": "~1.0.0"
   },
   "scripts": {
-    "prepublish": "grunt clean coffee shell:rebuild",
-    "test": "jasmine-focused --coffee spec/"
+    "prepublish": "grunt clean coffee lint shell:rebuild",
+    "test": "grunt test"
   }
 }
