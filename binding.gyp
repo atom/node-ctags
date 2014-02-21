@@ -3,7 +3,12 @@
     {
       'target_name': 'ctags',
       'include_dirs': [ '<!(node -e "require(\'nan\')")' ],
-      'sources': ['src/readtags.c', 'src/ctags.cc'],
+      'sources': [
+        'src/readtags.c',
+        'src/tags.cc',
+        'src/tag-finder.cc',
+        'src/tag-reader.cc'
+      ],
       'conditions': [
         ['OS=="win"', {
           'msvs_disabled_warnings': [

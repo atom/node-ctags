@@ -38,7 +38,8 @@
   },
   "dependencies": {
     "nan": "0.8.0",
-    "bindings": "~1.0.0"
+    "bindings": "~1.0.0",
+    "event-stream": "~3.1.0"
   },
   "scripts": {
     "prepublish": "grunt clean coffee lint shell:rebuild",
