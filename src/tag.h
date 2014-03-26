@@ -9,7 +9,7 @@ class Tag {
   Tag(tagEntry entry) {
     name = entry.name;
     file = entry.file;
-    kind = entry.kind;
+    kind = entry.kind != NULL ? entry.kind : "";
     if (entry.address.pattern != NULL)
       pattern = entry.address.pattern;
     else
