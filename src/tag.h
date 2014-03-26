@@ -10,10 +10,7 @@ class Tag {
     name = entry.name;
     file = entry.file;
     kind = entry.kind != NULL ? entry.kind : "";
-    if (entry.address.pattern != NULL)
-      pattern = entry.address.pattern;
-    else
-      pattern = "";
+    pattern = entry.address.pattern != NULL ? entry.address.pattern : "";
   }
 
   std::string name;
