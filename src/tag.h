@@ -9,6 +9,7 @@ class Tag {
   Tag(tagEntry entry) {
     name = entry.name;
     file = entry.file;
+    kind = entry.kind;
     if (entry.address.pattern != NULL)
       pattern = entry.address.pattern;
     else
@@ -17,6 +18,7 @@ class Tag {
 
   std::string name;
   std::string file;
+  std::string kind;
   std::string pattern;
 };
 

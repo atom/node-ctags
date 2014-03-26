@@ -20,6 +20,7 @@ void TagReader::HandleOKCallback() {
     Local<Object> tagObject = Object::New();
     tagObject->Set(NanSymbol("name"), NanSymbol(tags[i].name.data()));
     tagObject->Set(NanSymbol("file"), NanSymbol(tags[i].file.data()));
+    tagObject->Set(NanSymbol("kind"), NanSymbol(tags[i].kind.data()));
     if (tags[i].pattern.length() > 0)
       tagObject->Set(NanSymbol("pattern"), NanSymbol(tags[i].pattern.data()));
     array->Set(i, tagObject);
