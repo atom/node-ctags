@@ -17,6 +17,7 @@ void TagFinder::HandleOKCallback() {
     Local<Object> tagObject = Object::New();
     tagObject->Set(NanSymbol("name"), NanSymbol(matches[i].name.data()));
     tagObject->Set(NanSymbol("file"), NanSymbol(matches[i].file.data()));
+    tagObject->Set(NanSymbol("kind"), NanSymbol(matches[i].kind.data()));
     if (matches[i].pattern.length() > 0)
       tagObject->Set(NanSymbol("pattern"),
                      NanSymbol(matches[i].pattern.data()));
