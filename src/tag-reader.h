@@ -1,7 +1,6 @@
 #ifndef SRC_TAG_READER_H_
 #define SRC_TAG_READER_H_
 
-#include <node.h>
 #include <vector>
 #include "nan.h"
 #include "tag.h"

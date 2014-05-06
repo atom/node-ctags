@@ -1,7 +1,6 @@
 #ifndef SRC_TAG_FINDER_H_
 #define SRC_TAG_FINDER_H_
 
-#include <node.h>
 #include <string>
 #include <vector>
 #include "nan.h"
