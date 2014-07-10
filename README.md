@@ -44,6 +44,7 @@ ctags = require 'ctags'
 ctags.findTags('/Users/me/repos/node/tags', 'exists', (error, tags=[]) ->
   for tag in tags
     console.log("#{tag.name} is in #{tag.file}")
+)
 ```
 
 ### createReadStream(tagsFilePath, [options])
