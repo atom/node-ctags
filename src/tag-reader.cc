@@ -20,9 +20,24 @@ void TagReader::HandleOKCallback() {
     Local<Object> tagObject = Object::New();
     tagObject->Set(NanSymbol("name"), NanSymbol(tags[i].name.data()));
     tagObject->Set(NanSymbol("file"), NanSymbol(tags[i].file.data()));
-    tagObject->Set(NanSymbol("kind"), NanSymbol(tags[i].kind.data()));
+
+    if (tags[i].kind.length() > 0)
+      tagObject->Set(NanSymbol("kind"), NanSymbol(tags[i].kind.data()));
     if (tags[i].pattern.length() > 0)
       tagObject->Set(NanSymbol("pattern"), NanSymbol(tags[i].pattern.data()));
+
+    if (tags[i].fields.size() > 0) {
+      Local<Object> fieldEntry = Object::New();
+      map_iterator it = tags[i].fields.begin();
+      map_iterator end = tags[i].fields.end();
+      for (; it != end; ++it) {
+        const char *key = ((*it).first).data();
+        const char *value = ((*it).second).data();
+        fieldEntry->Set(NanSymbol(key), NanSymbol(value));
+      }
+      tagObject->Set(NanSymbol("fields"), fieldEntry);
+    }
+
     array->Set(i, tagObject);
   }
 
