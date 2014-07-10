@@ -14,13 +14,23 @@ void TagFinder::HandleOKCallback() {
 
   Handle<Array> array = Array::New(matches.size());
   for (size_t i = 0; i < matches.size(); i++) {
-    Local<Object> tagObject = Object::New();
+  	Local<Object> tagObject = Object::New();
     tagObject->Set(NanSymbol("name"), NanSymbol(matches[i].name.data()));
     tagObject->Set(NanSymbol("file"), NanSymbol(matches[i].file.data()));
-    tagObject->Set(NanSymbol("kind"), NanSymbol(matches[i].kind.data()));
+    
+    if (matches[i].kind.length() > 0)
+    	tagObject->Set(NanSymbol("kind"), NanSymbol(matches[i].kind.data()));
     if (matches[i].pattern.length() > 0)
-      tagObject->Set(NanSymbol("pattern"),
-                     NanSymbol(matches[i].pattern.data()));
+    	tagObject->Set(NanSymbol("pattern"), NanSymbol(matches[i].pattern.data()));
+
+		if (matches[i].fields.size() > 0) {
+			Local<Object> fieldEntry = Object::New();
+			for (std::map<std::string, std::string>::const_iterator it=matches[i].fields.begin(), end=matches[i].fields.end(); it != end; ++it) {
+				fieldEntry->Set(NanSymbol(((*it).first).data()), NanSymbol(((*it).second).data()));
+			}
+			tagObject->Set(NanSymbol("fields"), fieldEntry);
+		}
+    
     array->Set(i, tagObject);
   }
 

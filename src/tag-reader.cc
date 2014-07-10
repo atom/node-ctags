@@ -17,12 +17,23 @@ void TagReader::HandleOKCallback() {
 
   Handle<Array> array = Array::New(tags.size());
   for (size_t i = 0; i < tags.size(); i++) {
-    Local<Object> tagObject = Object::New();
+  	Local<Object> tagObject = Object::New();
     tagObject->Set(NanSymbol("name"), NanSymbol(tags[i].name.data()));
     tagObject->Set(NanSymbol("file"), NanSymbol(tags[i].file.data()));
-    tagObject->Set(NanSymbol("kind"), NanSymbol(tags[i].kind.data()));
+    
+    if (tags[i].kind.length() > 0)
+    	tagObject->Set(NanSymbol("kind"), NanSymbol(tags[i].kind.data()));
     if (tags[i].pattern.length() > 0)
-      tagObject->Set(NanSymbol("pattern"), NanSymbol(tags[i].pattern.data()));
+    	tagObject->Set(NanSymbol("pattern"), NanSymbol(tags[i].pattern.data()));
+
+		if (tags[i].fields.size() > 0) {
+			Local<Object> fieldEntry = Object::New();
+			for (std::map<std::string, std::string>::const_iterator it=tags[i].fields.begin(), end=tags[i].fields.end(); it != end; ++it) {
+				fieldEntry->Set(NanSymbol(((*it).first).data()), NanSymbol(((*it).second).data()));
+			}
+			tagObject->Set(NanSymbol("fields"), fieldEntry);
+		}
+    
     array->Set(i, tagObject);
   }
 
