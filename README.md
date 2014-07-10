@@ -34,7 +34,9 @@ Get all tags matching the tag specified from the tags file at the path.
 * `callback` - The function to call when complete with an error as the first
              argument and an array containing objects that have `name` and
              `file` keys and optionally a `pattern` key if the tag file
-             specified contains tag patterns.
+             specified contains tag patterns, as well as `kind` and `fields`
+	     keys representing respectively, if generated, the kind of the tag
+	     and description fields generatedby ctags.
 
 #### Example
 
@@ -53,7 +55,9 @@ Create a read stream to a tags file.
 
 The stream returned will emit `data` events with arrays of tag objects
 that have `name` and `file` keys and optionally a `pattern` key if the tag file
-specified contains tag patterns.
+specified contains tag patterns, as well as `kind` and `fields` keys representing
+respectively, if generated, the kind of the tag and description fields generated
+by ctags.
 
 An `error` event will be emitted if the tag file cannot be read.
 
@@ -76,3 +80,6 @@ stream.on 'data', (tags) ->
   for tag in tags
     console.log("#{tag.name} is in #{tag.file} with pattern: #{tag.pattern}")
 ```
+
+More detail on available kinds, fields and the ctags format overall can be found
+at http://ctags.sourceforge.net/FORMAT.
