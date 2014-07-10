@@ -359,8 +359,9 @@ static void parseTagLine (tagFile *file, tagEntry *const entry)
 				parseExtensionFields (file, entry, p + 2);
 		}
 	}
-	if (entry->fields.count > 0)
+	if (entry->fields.count > 0) {
 		entry->fields.list = file->fields.list;
+	}
 	for (i = entry->fields.count  ;  i < file->fields.max  ;  ++i)
 	{
 		file->fields.list [i].key = NULL;

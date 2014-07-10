@@ -28,4 +28,6 @@ class Tag {
   std::map<std::string, std::string> fields;
 };
 
+typedef std::map<std::string, std::string>::const_iterator map_iterator;
+
 #endif  // SRC_TAG_H_
