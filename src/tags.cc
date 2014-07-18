@@ -6,8 +6,8 @@
 void Tags::Init(Handle<Object> target) {
   NanScope();
 
-  Local<FunctionTemplate> newTemplate = FunctionTemplate::New(Tags::New);
-  newTemplate->SetClassName(NanSymbol("Tags"));
+  Local<FunctionTemplate> newTemplate = NanNew<FunctionTemplate>(Tags::New);
+  newTemplate->SetClassName(NanNew<String>("Tags"));
   newTemplate->InstanceTemplate()->SetInternalFieldCount(1);
 
   Local<ObjectTemplate> proto = newTemplate->PrototypeTemplate();
@@ -16,7 +16,7 @@ void Tags::Init(Handle<Object> target) {
   NODE_SET_METHOD(proto, "findTags", Tags::FindTags);
   NODE_SET_METHOD(proto, "getTags", Tags::GetTags);
 
-  target->Set(NanSymbol("Tags"), newTemplate->GetFunction());
+  target->Set(NanNew<String>("Tags"), newTemplate->GetFunction());
 }
 
 NODE_MODULE(ctags, Tags::Init)
@@ -75,7 +75,7 @@ Tags::Tags(Handle<String> path) {
 
 NAN_METHOD(Tags::Exists) {
   NanScope();
-  NanReturnValue(Boolean::New(GetFile(args) != NULL));
+  NanReturnValue(NanNew<Boolean>(GetFile(args) != NULL));
 }
 
 NAN_METHOD(Tags::End) {

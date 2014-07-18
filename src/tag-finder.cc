@@ -12,21 +12,24 @@ void TagFinder::Execute() {
 void TagFinder::HandleOKCallback() {
   NanScope();
 
-  Handle<Array> array = Array::New(matches.size());
+  Handle<Array> array = NanNew<Array>(matches.size());
   for (size_t i = 0; i < matches.size(); i++) {
-    Local<Object> tagObject = Object::New();
-    tagObject->Set(NanSymbol("name"), NanSymbol(matches[i].name.data()));
-    tagObject->Set(NanSymbol("file"), NanSymbol(matches[i].file.data()));
-    tagObject->Set(NanSymbol("kind"), NanSymbol(matches[i].kind.data()));
+    Local<Object> tagObject = NanNew<Object>();
+    tagObject->Set(NanNew<String>("name"),
+                   NanNew<String>(matches[i].name.data()));
+    tagObject->Set(NanNew<String>("file"),
+                   NanNew<String>(matches[i].file.data()));
+    tagObject->Set(NanNew<String>("kind"),
+                   NanNew<String>(matches[i].kind.data()));
     if (matches[i].pattern.length() > 0)
-      tagObject->Set(NanSymbol("pattern"),
-                     NanSymbol(matches[i].pattern.data()));
+      tagObject->Set(NanNew<String>("pattern"),
+                     NanNew<String>(matches[i].pattern.data()));
     array->Set(i, tagObject);
   }
 
   Local<Value> argv[] = {
-    Local<Value>::New(Null()),
-    Local<Value>::New(array)
+    NanNull(),
+    NanNew(array)
   };
   callback->Call(2, argv);
 }
