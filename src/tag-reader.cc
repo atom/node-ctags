@@ -15,20 +15,21 @@ void TagReader::Execute() {
 void TagReader::HandleOKCallback() {
   NanScope();
 
-  Handle<Array> array = Array::New(tags.size());
+  Handle<Array> array = NanNew<Array>(tags.size());
   for (size_t i = 0; i < tags.size(); i++) {
-    Local<Object> tagObject = Object::New();
-    tagObject->Set(NanSymbol("name"), NanSymbol(tags[i].name.data()));
-    tagObject->Set(NanSymbol("file"), NanSymbol(tags[i].file.data()));
-    tagObject->Set(NanSymbol("kind"), NanSymbol(tags[i].kind.data()));
+    Local<Object> tagObject = NanNew<Object>();
+    tagObject->Set(NanNew<String>("name"), NanNew<String>(tags[i].name.data()));
+    tagObject->Set(NanNew<String>("file"), NanNew<String>(tags[i].file.data()));
+    tagObject->Set(NanNew<String>("kind"), NanNew<String>(tags[i].kind.data()));
     if (tags[i].pattern.length() > 0)
-      tagObject->Set(NanSymbol("pattern"), NanSymbol(tags[i].pattern.data()));
+      tagObject->Set(NanNew<String>("pattern"),
+                     NanNew<String>(tags[i].pattern.data()));
     array->Set(i, tagObject);
   }
 
   Local<Value> argv[] = {
-    Local<Value>::New(Null()),
-    Local<Value>::New(array)
+    NanNull(),
+    NanNew(array)
   };
   callback->Call(2, argv);
 }
