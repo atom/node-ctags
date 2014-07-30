@@ -1,4 +1,4 @@
-{Tags} = require('bindings')('ctags.node')
+{Tags} = require('../build/Release/ctags.node')
 es = require 'event-stream'
 
 exports.findTags = (tagsFilePath, tag, options, callback) ->
