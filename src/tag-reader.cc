@@ -21,6 +21,7 @@ void TagReader::HandleOKCallback() {
     tagObject->Set(NanNew<String>("name"), NanNew<String>(tags[i].name.data()));
     tagObject->Set(NanNew<String>("file"), NanNew<String>(tags[i].file.data()));
     tagObject->Set(NanNew<String>("kind"), NanNew<String>(tags[i].kind.data()));
+    tagObject->Set(NanNew<String>("lineNumber"), NanNew<Integer>((int32_t)tags[i].lineNumber));
     if (tags[i].pattern.length() > 0)
       tagObject->Set(NanNew<String>("pattern"),
                      NanNew<String>(tags[i].pattern.data()));

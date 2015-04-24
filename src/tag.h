@@ -11,12 +11,14 @@ class Tag {
     file = entry.file;
     kind = entry.kind != NULL ? entry.kind : "";
     pattern = entry.address.pattern != NULL ? entry.address.pattern : "";
+    lineNumber = entry.address.lineNumber;
   }
 
   std::string name;
   std::string file;
   std::string kind;
   std::string pattern;
+  unsigned long lineNumber;
 };
 
 #endif  // SRC_TAG_H_
