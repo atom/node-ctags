@@ -22,7 +22,7 @@ void TagFinder::HandleOKCallback() {
     tagObject->Set(NanNew<String>("kind"),
                    NanNew<String>(matches[i].kind.data()));
     tagObject->Set(NanNew<String>("lineNumber"),
-                    NanNew<Integer>((int32_t)matches[i].lineNumber));
+                   NanNew<Integer>((int32_t)matches[i].lineNumber));
     if (matches[i].pattern.length() > 0)
       tagObject->Set(NanNew<String>("pattern"),
                      NanNew<String>(matches[i].pattern.data()));
