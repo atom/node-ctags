@@ -26,11 +26,13 @@ describe 'ctags', ->
         expect(tags[0].name).toBe 'duplicate'
         expect(tags[0].pattern).toBe '/^function duplicate() {$/'
         expect(tags[0].kind).toBe 'f'
+        expect(tags[0].lineNumber).toBe 3
 
         expect(tags[1].file).toBe 'tagged.js'
         expect(tags[1].name).toBe 'duplicate'
         expect(tags[1].pattern).toBe '/^function duplicate() {$/'
-        expect(tags[0].kind).toBe 'f'
+        expect(tags[1].kind).toBe 'f'
+        expect(tags[1].lineNumber).toBe 7
 
     describe 'when partialMatch is set to true', ->
       it 'returns tags that partially match the name', ->
@@ -49,10 +51,14 @@ describe 'ctags', ->
           expect(tags[0].file).toBe 'tagged-duplicate.js'
           expect(tags[0].name).toBe 'duplicate'
           expect(tags[0].pattern).toBe '/^function duplicate() {$/'
+          expect(tags[0].kind).toBe 'f'
+          expect(tags[0].lineNumber).toBe 3
 
           expect(tags[1].file).toBe 'tagged.js'
           expect(tags[1].name).toBe 'duplicate'
           expect(tags[1].pattern).toBe '/^function duplicate() {$/'
+          expect(tags[1].kind).toBe 'f'
+          expect(tags[1].lineNumber).toBe 7
 
     describe 'when caseInsensitive is set to true', ->
       it 'returns tags that match the name case insensitively', ->
@@ -72,6 +78,7 @@ describe 'ctags', ->
           expect(tags[0].name).toBe 'callMeMaybe'
           expect(tags[0].pattern).toBe '/^function callMeMaybe() {$/'
           expect(tags[0].kind).toBe 'f'
+          expect(tags[0].lineNumber).toBe 3
 
   describe '.createReadStream(tagsFilePath)', ->
     it 'returns a stream that emits data and end events', ->
@@ -93,21 +100,25 @@ describe 'ctags', ->
         expect(tags[0].name).toBe 'callMeMaybe'
         expect(tags[0].pattern).toBe '/^function callMeMaybe() {$/'
         expect(tags[0].kind).toBe 'f'
+        expect(tags[0].lineNumber).toBe 3
 
         expect(tags[1].file).toBe 'tagged-duplicate.js'
         expect(tags[1].name).toBe 'duplicate'
         expect(tags[1].pattern).toBe '/^function duplicate() {$/'
         expect(tags[1].kind).toBe 'f'
+        expect(tags[1].lineNumber).toBe 3
 
         expect(tags[2].file).toBe 'tagged.js'
         expect(tags[2].name).toBe 'duplicate'
         expect(tags[2].pattern).toBe '/^function duplicate() {$/'
         expect(tags[2].kind).toBe 'f'
+        expect(tags[2].lineNumber).toBe 7
 
         expect(tags[3].file).toBe 'tagged.js'
         expect(tags[3].name).toBe 'thisIsCrazy'
         expect(tags[3].pattern).toBe '/^var thisIsCrazy = true;$/'
         expect(tags[3].kind).toBe 'v'
+        expect(tags[3].lineNumber).toBe 2
 
     it "emits an error event when the tags file does not exist", ->
       missingTagsFile = path.join(__dirname, 'fixtures/not-tags')
@@ -141,18 +152,22 @@ describe 'ctags', ->
       expect(dataHandler.argsForCall[0][0][0].name).toBe 'callMeMaybe'
       expect(dataHandler.argsForCall[0][0][0].pattern).toBe '/^function callMeMaybe() {$/'
       expect(dataHandler.argsForCall[0][0][0].kind).toBe 'f'
+      expect(dataHandler.argsForCall[0][0][0].lineNumber).toBe 3
 
       expect(dataHandler.argsForCall[0][0][1].file).toBe 'tagged-duplicate.js'
       expect(dataHandler.argsForCall[0][0][1].name).toBe 'duplicate'
       expect(dataHandler.argsForCall[0][0][1].pattern).toBe '/^function duplicate() {$/'
       expect(dataHandler.argsForCall[0][0][1].kind).toBe 'f'
+      expect(dataHandler.argsForCall[0][0][1].lineNumber).toBe 3
 
       expect(dataHandler.argsForCall[0][0][2].file).toBe 'tagged.js'
       expect(dataHandler.argsForCall[0][0][2].name).toBe 'duplicate'
       expect(dataHandler.argsForCall[0][0][2].pattern).toBe '/^function duplicate() {$/'
       expect(dataHandler.argsForCall[0][0][2].kind).toBe 'f'
+      expect(dataHandler.argsForCall[0][0][2].lineNumber).toBe 7
 
       expect(dataHandler.argsForCall[1][0][0].file).toBe 'tagged.js'
       expect(dataHandler.argsForCall[1][0][0].name).toBe 'thisIsCrazy'
       expect(dataHandler.argsForCall[1][0][0].pattern).toBe '/^var thisIsCrazy = true;$/'
       expect(dataHandler.argsForCall[1][0][0].kind).toBe 'v'
+      expect(dataHandler.argsForCall[1][0][0].lineNumber).toBe 2
