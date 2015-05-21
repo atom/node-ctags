@@ -4,7 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-callMeMaybe	tagged.js	/^function callMeMaybe() {$/;"	f	line:3
-duplicate	tagged-duplicate.js	/^function duplicate() {$/;"	f	line:3
-duplicate	tagged.js	/^function duplicate() {$/;"	f	line:7
-thisIsCrazy	tagged.js	/^var thisIsCrazy = true;$/;"	v	line:2
+callMeMaybe	tagged.js	/^function callMeMaybe() {$/;"	f
+duplicate	tagged-duplicate.js	/^function duplicate() {$/;"	f
+duplicate	tagged.js	/^function duplicate() {$/;"	f
+thisIsCrazy	tagged.js	/^var thisIsCrazy = true;$/;"	v
