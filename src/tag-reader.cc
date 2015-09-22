@@ -13,25 +13,29 @@ void TagReader::Execute() {
 }
 
 void TagReader::HandleOKCallback() {
-  NanScope();
+  Nan::HandleScope handle_scope;
 
-  Handle<Array> array = NanNew<Array>(tags.size());
+  Local<Array> array = Nan::New<Array>(tags.size());
   for (size_t i = 0; i < tags.size(); i++) {
-    Local<Object> tagObject = NanNew<Object>();
-    tagObject->Set(NanNew<String>("name"), NanNew<String>(tags[i].name.data()));
-    tagObject->Set(NanNew<String>("file"), NanNew<String>(tags[i].file.data()));
-    tagObject->Set(NanNew<String>("kind"), NanNew<String>(tags[i].kind.data()));
-    tagObject->Set(NanNew<String>("lineNumber"),
-                   NanNew<Integer>((int32_t)tags[i].lineNumber));
+    Local<Object> tagObject = Nan::New<Object>();
+    tagObject->Set(
+        Nan::New<String>("name").ToLocalChecked(),
+        Nan::New<String>(tags[i].name.data()).ToLocalChecked());
+    tagObject->Set(
+        Nan::New<String>("file").ToLocalChecked(),
+        Nan::New<String>(tags[i].file.data()).ToLocalChecked());
+    tagObject->Set(
+        Nan::New<String>("kind").ToLocalChecked(),
+        Nan::New<String>(tags[i].kind.data()).ToLocalChecked());
+    tagObject->Set(Nan::New<String>("lineNumber").ToLocalChecked(),
+                   Nan::New<Integer>((int32_t)tags[i].lineNumber));
     if (tags[i].pattern.length() > 0)
-      tagObject->Set(NanNew<String>("pattern"),
-                     NanNew<String>(tags[i].pattern.data()));
+      tagObject->Set(
+          Nan::New<String>("pattern").ToLocalChecked(),
+          Nan::New<String>(tags[i].pattern.data()).ToLocalChecked());
     array->Set(i, tagObject);
   }
 
-  Local<Value> argv[] = {
-    NanNull(),
-    NanNew(array)
-  };
+  Local<Value> argv[] = { Nan::Null(), array };
   callback->Call(2, argv);
 }

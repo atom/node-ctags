@@ -18,7 +18,7 @@ class Tags : public node::ObjectWrap {
   static NAN_METHOD(GetTags);
   static NAN_METHOD(New);
 
-  static tagFile* GetFile(_NAN_METHOD_ARGS_TYPE args);
+  static tagFile* GetFile(v8::Local<v8::Object> obj);
 
   explicit Tags(Handle<String> path);
   ~Tags() {
