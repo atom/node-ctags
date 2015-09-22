@@ -8,10 +8,10 @@
 
 using namespace v8;
 
-class TagReader : public NanAsyncWorker {
+class TagReader : public Nan::AsyncWorker {
  public:
-  TagReader(NanCallback *callback, int chunkSize, tagFile *file)
-    : NanAsyncWorker(callback), chunkSize(chunkSize), file(file) {}
+  TagReader(Nan::Callback *callback, int chunkSize, tagFile *file)
+    : Nan::AsyncWorker(callback), chunkSize(chunkSize), file(file) {}
 
   ~TagReader() {}
 

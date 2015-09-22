@@ -9,10 +9,10 @@
 
 using namespace v8;
 
-class TagFinder : public NanAsyncWorker {
+class TagFinder : public Nan::AsyncWorker {
  public:
-  TagFinder(NanCallback *callback, std::string tag, int options, tagFile *file)
-    : NanAsyncWorker(callback), options(options), tag(tag), file(file) {}
+  TagFinder(Nan::Callback *callback, std::string tag, int options, tagFile *file)
+    : Nan::AsyncWorker(callback), options(options), tag(tag), file(file) {}
 
   ~TagFinder() {}
 

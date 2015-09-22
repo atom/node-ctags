@@ -4,67 +4,65 @@
 #include "tag-reader.h"
 
 void Tags::Init(Handle<Object> target) {
-  NanScope();
+  Nan::HandleScope handle_scope;
 
-  Local<FunctionTemplate> newTemplate = NanNew<FunctionTemplate>(Tags::New);
-  newTemplate->SetClassName(NanNew<String>("Tags"));
+  Local<FunctionTemplate> newTemplate = Nan::New<FunctionTemplate>(Tags::New);
+  newTemplate->SetClassName(Nan::New<String>("Tags").ToLocalChecked());
   newTemplate->InstanceTemplate()->SetInternalFieldCount(1);
 
   Local<ObjectTemplate> proto = newTemplate->PrototypeTemplate();
-  NODE_SET_METHOD(proto, "end", Tags::End);
-  NODE_SET_METHOD(proto, "exists", Tags::Exists);
-  NODE_SET_METHOD(proto, "findTags", Tags::FindTags);
-  NODE_SET_METHOD(proto, "getTags", Tags::GetTags);
+  Nan::SetMethod(proto, "end", Tags::End);
+  Nan::SetMethod(proto, "exists", Tags::Exists);
+  Nan::SetMethod(proto, "findTags", Tags::FindTags);
+  Nan::SetMethod(proto, "getTags", Tags::GetTags);
 
-  target->Set(NanNew<String>("Tags"), newTemplate->GetFunction());
+  target->Set(Nan::New<String>("Tags").ToLocalChecked(),
+              newTemplate->GetFunction());
 }
 
 NODE_MODULE(ctags, Tags::Init)
 
 NAN_METHOD(Tags::New) {
-  NanScope();
-  Tags *tags = new Tags(Local<String>::Cast(args[0]));
-  tags->Wrap(args.This());
-  NanReturnUndefined();
+  Tags *tags = new Tags(Local<String>::Cast(info[0]));
+  tags->Wrap(info.This());
+  info.GetReturnValue().SetUndefined();
 }
 
-tagFile* Tags::GetFile(_NAN_METHOD_ARGS_TYPE args) {
-  return node::ObjectWrap::Unwrap<Tags>(args.This())->file;
+tagFile* Tags::GetFile(v8::Local<v8::Object> obj) {
+  return node::ObjectWrap::Unwrap<Tags>(obj)->file;
 }
 
 NAN_METHOD(Tags::GetTags) {
-  NanScope();
-
-  tagFile *tagFile = GetFile(args);
-  int chunkSize = args[0]->Uint32Value();
-  NanCallback *callback = new NanCallback(args[1].As<Function>());
-  NanAsyncQueueWorker(new TagReader(callback, chunkSize, tagFile));
-  NanReturnUndefined();
+  tagFile *tagFile = GetFile(info.This());
+  int chunkSize = info[0]->Uint32Value();
+  Nan::Callback *callback = new Nan::Callback(info[1].As<Function>());
+  Nan::AsyncQueueWorker(new TagReader(callback, chunkSize, tagFile));
+  info.GetReturnValue().SetUndefined();
 }
 
 NAN_METHOD(Tags::FindTags) {
-  NanScope();
+  Nan::HandleScope handle_scope;
 
-  tagFile *tagFile = GetFile(args);
-  std::string tag(*String::Utf8Value(args[0]));
+  tagFile *tagFile = GetFile(info.This());
+  std::string tag(*String::Utf8Value(info[0]));
   int options = 0;
-  if (args[1]->BooleanValue())
+  if (info[1]->BooleanValue())
     options |= TAG_PARTIALMATCH;
   else
     options |= TAG_FULLMATCH;
 
-  if (args[2]->BooleanValue())
+  if (info[2]->BooleanValue())
     options |= TAG_IGNORECASE;
   else
     options |= TAG_OBSERVECASE;
 
-  NanCallback *callback = new NanCallback(args[3].As<Function>());
-  NanAsyncQueueWorker(new TagFinder(callback, tag, options, tagFile));
-  NanReturnUndefined();
+  Nan::Callback *callback = new Nan::Callback(info[3].As<Function>());
+  Nan::AsyncQueueWorker(new TagFinder(callback, tag, options, tagFile));
+  info.GetReturnValue().SetUndefined();
 }
 
 Tags::Tags(Handle<String> path) {
-  NanScope();
+  Nan::HandleScope handle_scope;
 
   std::string filePath(*String::Utf8Value(path));
   tagFileInfo info;
@@ -74,18 +72,15 @@ Tags::Tags(Handle<String> path) {
 }
 
 NAN_METHOD(Tags::Exists) {
-  NanScope();
-  NanReturnValue(NanNew<Boolean>(GetFile(args) != NULL));
+  info.GetReturnValue().Set(GetFile(info.This()) != NULL);
 }
 
 NAN_METHOD(Tags::End) {
-  NanScope();
-
-  tagFile *file = GetFile(args);
+  tagFile *file = GetFile(info.This());
   if (file != NULL) {
     tagsClose(file);
-    node::ObjectWrap::Unwrap<Tags>(args.This())->file = NULL;
+    node::ObjectWrap::Unwrap<Tags>(info.This())->file = NULL;
   }
 
-  NanReturnUndefined();
+  info.GetReturnValue().SetUndefined();
 }
