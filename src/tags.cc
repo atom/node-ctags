@@ -56,8 +56,9 @@ NAN_METHOD(Tags::FindTags) {
   else
     options |= TAG_OBSERVECASE;
 
-  Nan::Callback *callback = new Nan::Callback(info[3].As<Function>());
-  Nan::AsyncQueueWorker(new TagFinder(callback, tag, options, tagFile));
+  size_t limit = info[3]->IntegerValue();
+  Nan::Callback *callback = new Nan::Callback(info[4].As<Function>());
+  Nan::AsyncQueueWorker(new TagFinder(callback, tag, options, limit, tagFile));
   info.GetReturnValue().SetUndefined();
 }
 
