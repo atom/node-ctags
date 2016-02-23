@@ -32,9 +32,14 @@ Get all tags matching the tag specified from the tags file at the path.
     (default: `false`)
 
 * `callback` - The function to call when complete with an error as the first
-             argument and an array containing objects that have `name` and
-             `file` keys and optionally a `pattern` key if the tag file
-             specified contains tag patterns.
+             argument and an array containing tag objects. Each tag object contains:
+
+  * `name` - name of the tag
+  * `file` - location of the tag
+  * `kind` - kind of the tag (see `ctags --list-kinds`)
+  * `lineNumber` - line number of the tag in `file` (defaults to 0 if not provided)
+  * `pattern` (optional) - pattern to search for in `file` (only if provided in tag file)
+  * `fields` (optional) - object with string values; extra fields for the tag (only if provided in tag file)
 
 #### Example
 
