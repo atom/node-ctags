@@ -1,0 +1,10 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+callMeMaybe	tagged.js	/^function callMeMaybe() {$/;"	f	class:TestClass	extra:test
+duplicate	tagged-duplicate.js	/^function duplicate() {$/;"	f	test:spaces are fine	test2:more spaces
+duplicate	tagged.js	/^function duplicate() {$/;"	f	field name:1
+thisIsCrazy	tagged.js	/^var thisIsCrazy = true;$/;"	v	emptyField:
