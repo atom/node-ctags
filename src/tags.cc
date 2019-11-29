@@ -17,7 +17,7 @@ void Tags::Init(Local<Object> target) {
   Nan::SetMethod(proto, "findTags", Tags::FindTags);
   Nan::SetMethod(proto, "getTags", Tags::GetTags);
 
-  target->Set(Nan::New<String>("Tags").ToLocalChecked(),
+  Nan::Set(target, Nan::New<String>("Tags").ToLocalChecked(),
               newTemplate->GetFunction(context).ToLocalChecked());
 }
 
