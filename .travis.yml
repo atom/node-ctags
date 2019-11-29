@@ -17,10 +17,7 @@ install:
 language: node_js
 
 node_js:
-  - "iojs"
-  - "node"
-  - "0.10"
-  - "0.12"
+  - "12.13.1"
 
 notifications:
   email:
