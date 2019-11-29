@@ -1,6 +1,5 @@
 os:
   - linux
-  - osx
   
 sudo: false
 
@@ -19,10 +18,7 @@ install:
 language: node_js
 
 node_js:
-  - "6"
-  - "8"
-  - "10"
-  - "12"
+  - "node"
 
 notifications:
   email:
