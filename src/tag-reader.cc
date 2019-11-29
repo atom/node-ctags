@@ -37,5 +37,5 @@ void TagReader::HandleOKCallback() {
   }
 
   Local<Value> argv[] = { Nan::Null(), array };
-  callback->Call(2, argv);
+  callback->Call(2, argv, async_resource);
 }
