@@ -1,5 +1,7 @@
 os:
   - linux
+  - osx
+  
 sudo: false
 
 addons:
@@ -17,7 +19,10 @@ install:
 language: node_js
 
 node_js:
-  - "12.13.1"
+  - "6"
+  - "8"
+  - "10"
+  - "12"
 
 notifications:
   email:
