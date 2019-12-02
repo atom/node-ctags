@@ -3,8 +3,9 @@
 #include "tag-finder.h"
 #include "tag-reader.h"
 
-void Tags::Init(Handle<Object> target) {
+void Tags::Init(Local<Object> target) {
   Nan::HandleScope handle_scope;
+  v8::Local<v8::Context> context = Nan::GetCurrentContext();
 
   Local<FunctionTemplate> newTemplate = Nan::New<FunctionTemplate>(Tags::New);
   newTemplate->SetClassName(Nan::New<String>("Tags").ToLocalChecked());
@@ -16,8 +17,8 @@ void Tags::Init(Handle<Object> target) {
   Nan::SetMethod(proto, "findTags", Tags::FindTags);
   Nan::SetMethod(proto, "getTags", Tags::GetTags);
 
-  target->Set(Nan::New<String>("Tags").ToLocalChecked(),
-              newTemplate->GetFunction());
+  Nan::Set(target, Nan::New<String>("Tags").ToLocalChecked(),
+              newTemplate->GetFunction(context).ToLocalChecked());
 }
 
 NODE_MODULE(ctags, Tags::Init)
@@ -34,7 +35,8 @@ tagFile* Tags::GetFile(v8::Local<v8::Object> obj) {
 
 NAN_METHOD(Tags::GetTags) {
   tagFile *tagFile = GetFile(info.This());
-  int chunkSize = info[0]->Uint32Value();
+  v8::Local<v8::Context> context = Nan::GetCurrentContext();
+  int chunkSize = info[0]->Uint32Value(context).FromJust();
   Nan::Callback *callback = new Nan::Callback(info[1].As<Function>());
   Nan::AsyncQueueWorker(new TagReader(callback, chunkSize, tagFile));
   info.GetReturnValue().SetUndefined();
@@ -44,14 +46,14 @@ NAN_METHOD(Tags::FindTags) {
   Nan::HandleScope handle_scope;
 
   tagFile *tagFile = GetFile(info.This());
-  std::string tag(*String::Utf8Value(info[0]));
+  std::string tag(*Nan::Utf8String(info[0]));
   int options = 0;
-  if (info[1]->BooleanValue())
+  if (Nan::To<bool>(info[1]).FromJust())
     options |= TAG_PARTIALMATCH;
   else
     options |= TAG_FULLMATCH;
 
-  if (info[2]->BooleanValue())
+  if (Nan::To<bool>(info[2]).FromJust())
     options |= TAG_IGNORECASE;
   else
     options |= TAG_OBSERVECASE;
@@ -61,10 +63,10 @@ NAN_METHOD(Tags::FindTags) {
   info.GetReturnValue().SetUndefined();
 }
 
-Tags::Tags(Handle<String> path) {
+Tags::Tags(Local<String> path) {
   Nan::HandleScope handle_scope;
 
-  std::string filePath(*String::Utf8Value(path));
+  std::string filePath(*Nan::Utf8String(path));
   tagFileInfo info;
   file = tagsOpen(filePath.data(), &info);
   if (!info.status.opened)

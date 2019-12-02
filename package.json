@@ -37,7 +37,7 @@
     "node-cpplint": "0.1.5"
   },
   "dependencies": {
-    "nan": "^2",
+    "nan": "^2.14.0",
     "event-stream": "~3.1.0"
   },
   "scripts": {

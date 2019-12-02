@@ -1,5 +1,6 @@
 os:
   - linux
+  
 sudo: false
 
 addons:
@@ -17,10 +18,7 @@ install:
 language: node_js
 
 node_js:
-  - "iojs"
   - "node"
-  - "0.10"
-  - "0.12"
 
 notifications:
   email:
