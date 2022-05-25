@@ -26,7 +26,7 @@
   "homepage": "http://atom.github.io/node-ctags",
   "main": "./lib/ctags.js",
   "devDependencies": {
-    "grunt": "~0.4.0",
+    "grunt": "~1.5.3",
     "grunt-contrib-coffee": "~0.9.0",
     "grunt-shell": "~0.2.1",
     "grunt-cli": "~0.1.6",
