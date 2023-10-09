@@ -12,10 +12,12 @@ exports.findTags = (tagsFilePath, tag, options, callback) ->
     callback = options
     options = null
 
-  {partialMatch, caseInsensitive} = options ? {}
+  {partialMatch, caseInsensitive, limit} = options ? {}
+  if limit? and (not (typeof limit == "number") or limit <= 0)
+    throw new TypeError('limit must be a positive integer')
 
   tagsWrapper = new Tags(tagsFilePath)
-  tagsWrapper.findTags tag, partialMatch, caseInsensitive, (error, tags) ->
+  tagsWrapper.findTags tag, partialMatch, caseInsensitive, limit, (error, tags) ->
     tagsWrapper.end()
     callback?(error, tags)
 

@@ -80,6 +80,25 @@ describe 'ctags', ->
           expect(tags[0].kind).toBe 'f'
           expect(tags[0].lineNumber).toBe 0
 
+    describe 'when limit is set', ->
+      it 'returns the correct number of tags', ->
+        callback = jasmine.createSpy('callback')
+        tags = ctags.findTags(tagsFile, 'dup', {partialMatch: true, limit: 1}, callback)
+
+        waitsFor ->
+          callback.callCount is 1
+
+        runs ->
+          expect(callback.argsForCall[0][0]).toBeFalsy()
+          tags = callback.argsForCall[0][1]
+
+          expect(tags.length).toBe 1
+          expect(tags[0].name).toBe 'duplicate'
+
+      it 'throws for invalid values', ->
+        expect(() -> ctags.findTags(tagsFile, '', limit: 'test')).toThrow()
+        expect(() -> ctags.findTags(tagsFile, '', limit: 0)).toThrow()
+
   describe '.createReadStream(tagsFilePath)', ->
     it 'returns a stream that emits data and end events', ->
       stream = ctags.createReadStream(tagsFile)

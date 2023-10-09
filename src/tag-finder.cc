@@ -4,7 +4,8 @@ void TagFinder::Execute() {
   tagEntry entry;
   if (tagsFind(file, &entry, tag.data(), options) == TagSuccess) {
     matches.push_back(Tag(entry));
-    while (tagsFindNext(file, &entry) == TagSuccess)
+    while ((limit == 0 || matches.size() < limit) &&
+           tagsFindNext(file, &entry) == TagSuccess)
       matches.push_back(Tag(entry));
   }
 }

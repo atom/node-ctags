@@ -31,6 +31,8 @@ Get all tags matching the tag specified from the tags file at the path.
     (default: `false`)
   * `partialMatch` - `true` to include tags that partially match the given tag
     (default: `false`)
+  * `limit` - maximum number of matches to return. Should be a positive integer.
+    (default: unlimited)
 
 * `callback` - The function to call when complete with an error as the first
              argument and an array containing objects that have `name` and

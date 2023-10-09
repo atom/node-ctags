@@ -11,8 +11,16 @@ using namespace v8;
 
 class TagFinder : public Nan::AsyncWorker {
  public:
-  TagFinder(Nan::Callback *callback, std::string tag, int options, tagFile *file)
-    : Nan::AsyncWorker(callback), options(options), tag(tag), file(file) {}
+  TagFinder(Nan::Callback* callback,
+            std::string tag,
+            int options,
+            size_t limit,
+            tagFile* file)
+      : Nan::AsyncWorker(callback),
+        options(options),
+        limit(limit),
+        tag(tag),
+        file(file) {}
 
   ~TagFinder() {}
 
@@ -21,6 +29,7 @@ class TagFinder : public Nan::AsyncWorker {
 
  private:
   int options;
+  size_t limit;
   std::string tag;
   std::vector< Tag > matches;
   tagFile *file;
